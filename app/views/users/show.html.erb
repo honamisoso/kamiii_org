@@ -1,0 +1,82 @@
+<div class="container px-5 px-sm-0">
+  <div class="row">
+    <div class="col-md-3">
+
+
+    <% flash.each do |type, message| %>
+        <div class="flash-message <%= type %>">
+          <%= message %>
+        </div>
+    <% end %>
+
+<h2>会員情報</h2>
+
+  <table>
+  <tr>
+  <%= image_tag @user.get_profile_image(100, 100) %>
+  </tr>
+  <tr>
+  <th>name：</th>
+  <th><%= @user.name %></th>
+  </tr>
+  <tr>
+  <th>髪質・毛量・長さ:</th>
+  <th><%= @user.introduction %></th>
+  </tr>
+  </table>
+<%= link_to edit_user_path(@user.id), class: "btn btn-outline-secondary btn-block" do %>
+<i class="fas fa-user-cog"></i>
+<% end %>
+
+
+<h4>レビュー📝</h4>
+<!-- form_with部分 -->
+<%= form_with model:@book, method: :post do |f| %>
+
+  <h4>商品名</h4>
+  <%= f.text_field :title %>
+
+  <h4>使用感</h4>
+  <%= f.text_area :body %>
+
+  <!--<div><%= f.submit 'Create Book' %></div>-->
+  <div><input type="submit" name="commit" value="投稿！" class="btn btn-success" data-disable-with="投稿！"></div>
+<% end %>
+ </div>
+
+<%= render 'books/index', user: @user, book: @book %>
+
+<div class="col-md-8 offset-md-1">
+<h2><%= @user.name %>が使用した商品🌸</h2>
+
+<div>
+  <table class="table table-hover table-inverse">
+   <thead>
+    <tr>
+      <th></th>
+      <th>商品名</th>
+      <th>使用感</th>
+      </tr>
+   </thead>
+   <tbody>
+
+<% @books.each do |book| %>
+
+
+  <tr>
+    <th>
+    <%= link_to user_path(book.user) do %>
+    <%= image_tag book.user.get_profile_image(100, 100) %>
+    <% end %>
+    </th>
+    <th><%= link_to book.title, book_path(book.id) %></th>
+    <th><%= book.body %></th>
+   </tr>
+ </div>
+ <% end %>
+
+   </tbody>
+ </table>
+   </div>
+   </div>
+ </div>

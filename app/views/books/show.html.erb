@@ -1,0 +1,105 @@
+
+<% flash.each do |type, message| %>
+  <div class="flash-message <%= type %>">
+    <%= message %>
+  </div>
+<% end %>
+
+<div class="container px-5 px-sm-0">
+  <div class="row">
+    <div class="col-md-3">
+       <h2>User info</h2>
+
+       <table>
+          <tr>
+            <th colspan="2"><%= image_tag @user.get_profile_image(100, 100) %></th>
+          </tr>
+          <tr>
+            <th>名前：</th>
+            <td><%= @user.name %></td>
+          </tr>
+          <tr>
+            <th>自己紹介:</th>
+            <td><%= @user.introduction %></td>
+          </tr>
+        </table>
+
+        <%= link_to edit_user_path(@user.id), class: "btn btn-outline-secondary btn-block" do %>
+          <i class="fas fa-user-cog"></i>
+        <% end %>
+
+        <h4>レビュー📝</h4>
+        <!-- form_with部分 -->
+        <%= form_with model: @newbook, method: :post do |f| %>
+
+          <h4>商品</h4>
+          <%= f.text_field :title %>
+
+          <h4>使用感</h4>
+          <%= f.text_area :body %>
+
+          <div>
+            <input type="submit" name="commit" value="投稿！" class="btn btn-success" data-disable-with="投稿！">
+          </div>
+        <% end %>
+      </div>
+
+      <div class="col-md-8 offset-md-1">
+        <h2>レビュー詳細💬</h2>
+
+        <div>
+          <table class="table table-hover table-inverse">
+            <tbody>
+              <tr>
+                <td>
+                  <%= link_to user_path(@book.user.id) do %>
+                    <%= image_tag @book.user.get_profile_image(100, 100) %>
+                    <br><%= @user.name %></br>
+                  <% end %>
+                </td>
+                <td><%= link_to @book.title, book_path(@book.id) %></td>
+                <td><%= @book.body %></td>
+                <% if current_user.id === @book.user.id %>
+                  <td><%= link_to "Edit",edit_book_path(@book.id),class: "btn btn-sm btn-success" %></td>
+                  <td><%= link_to "Destroy", book_path(@book.id),class: "btn btn-sm btn-danger", method: :delete, "data-confirm" => "本当に消しますか?" %></td>
+                <% end %>
+              </tr>
+            </thead>
+          </table>
+        </div>
+
+        <div>
+          <%= form_with model: @comment do |f| %>
+            <%= f.hidden_field :book_id %>
+            <div class="form-group">
+              <%= f.text_area :body, class: "form-control", placeholder: "comment" %>
+            </div>
+            <div class="form-group d-flex justify-content-center">
+              <%= f.submit 'comment', class: "btn btn-primary px-5" %>
+            </div>
+          <% end %>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title d-flex justify-content-center">comments</h4>
+              <% if @comments.any? %>
+                <% @comments.each do |comment| %>
+                  <hr>
+                  <div class="row">
+                    <div class="col-3"><%= comment.user.name %></div>
+                    <div class="col-9 d-flex justify-content-between"><%= comment.body %><%= (link_to 'delete', comment, method: :delete, class: "btn btn-danger") if current_user == comment.user %></div>
+                  </div>
+                <% end %>
+              <% else %>
+                <h5 class="d-flex justify-content-center">no-comments</h5>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
