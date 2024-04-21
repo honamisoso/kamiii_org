@@ -9,15 +9,15 @@
 <% end %>
 
   <div>
-  <h2>商品</h2>
+  <h2>編集ページ</h2>
   <%= form_with model: @book do |f| %>
     <p>商品名</p>
     <p><%= f.text_field :title, autofocus: true %></p>
     <p>使用感</p>
     <p><%= f.text_field :body, autofocus: true %></p>
-    <p><%= f.submit "Update Book" %></p>
+    <p><%= f.submit "編集する🔧" %></p>
 
-    <p><%= link_to "Show", book_path(@book.id) %> | <%= link_to "Back", books_path %></p>
+    <p><%= link_to "商品一覧", book_path(@book.id) %> | <%= link_to "戻る", books_path %></p>
 
   <% end %>
   </div>

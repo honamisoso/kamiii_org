@@ -45,7 +45,7 @@
       </div>
 
       <div class="col-md-8 offset-md-1">
-        <h2>レビュー詳細💬</h2>
+        <h2>レビュー詳細🌟</h2>
 
         <div>
           <table class="table table-hover table-inverse">
@@ -60,8 +60,8 @@
                 <td><%= link_to @book.title, book_path(@book.id) %></td>
                 <td><%= @book.body %></td>
                 <% if current_user.id === @book.user.id %>
-                  <td><%= link_to "Edit",edit_book_path(@book.id),class: "btn btn-sm btn-success" %></td>
-                  <td><%= link_to "Destroy", book_path(@book.id),class: "btn btn-sm btn-danger", method: :delete, "data-confirm" => "本当に消しますか?" %></td>
+                  <td><%= link_to "編集🔧",edit_book_path(@book.id),class: "btn btn-sm btn-success" %></td>
+                  <td><%= link_to "削除🚮", book_path(@book.id),class: "btn btn-sm btn-danger", method: :delete, "data-confirm" => "本当に消しますか?" %></td>
                 <% end %>
               </tr>
             </thead>
@@ -72,10 +72,10 @@
           <%= form_with model: @comment do |f| %>
             <%= f.hidden_field :book_id %>
             <div class="form-group">
-              <%= f.text_area :body, class: "form-control", placeholder: "comment" %>
+              <%= f.text_area :body, class: "form-control", placeholder: "コメントを書き込む" %>
             </div>
             <div class="form-group d-flex justify-content-center">
-              <%= f.submit 'comment', class: "btn btn-primary px-5" %>
+              <%= f.submit 'コメントする💬', class: "btn btn-primary px-5" %>
             </div>
           <% end %>
         </div>
@@ -83,7 +83,7 @@
         <div>
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title d-flex justify-content-center">comments</h4>
+              <h4 class="card-title d-flex justify-content-center">コメント一覧</h4>
               <% if @comments.any? %>
                 <% @comments.each do |comment| %>
                   <hr>
